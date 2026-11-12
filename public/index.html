@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gpsdash</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>gpsdash</h1>
+    <p class="subtitle">GPS and NTP status dashboard</p>
+  </header>
+  <main>
+    <p id="error-banner" class="error-banner" hidden></p>
+    <div class="panels">
+      <section>
+        <h2>GPS</h2>
+        <div id="gps-panel">Loading…</div>
+      </section>
+      <section>
+        <h2>NTP</h2>
+        <div id="ntp-panel">Loading…</div>
+      </section>
+    </div>
+    <div class="panels">
+      <section>
+        <h2>Sky view</h2>
+        <div id="sky-plot">Loading…</div>
+      </section>
+      <section>
+        <div class="section-head">
+          <h2>Clock offset</h2>
+          <div class="graph-toggles" role="group" aria-label="Graph scales">
+            <button type="button" id="toggle-y" class="toggle" aria-pressed="true" title="Value axis: logarithmic or linear">Value: log</button>
+            <button type="button" id="toggle-t" class="toggle" aria-pressed="true" title="Time axis: logarithmic or linear">Time: log</button>
+          </div>
+        </div>
+        <div id="offset-sparkline">Loading…</div>
+      </section>
+    </div>
+    <section>
+      <h2>Sources</h2>
+      <div id="sources-panel">Loading…</div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>Vibe coded by Michael Morrow using Claude.</p>
+    <p>Open source under the <a href="/LICENSE">MIT License</a> &middot; &copy; 2026 Michael Morrow</p>
+  </footer>
+  <script src="dashboard.js"></script>
+</body>
+</html>

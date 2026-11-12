@@ -1,0 +1,31 @@
+# Example systemd unit for the agent. It runs on the machine that has the GPS receiver, chrony and gpsd. Copy it to
+# /etc/systemd/system/gpsdash-agent.service and adjust User, WorkingDirectory (the folder that holds server.py) and ExecStart.
+# The user must be able to run `chronyc tracking` and `chronyc sources`, and to reach gpsd on localhost:2947.
+[Unit]
+Description=gpsdash agent: chrony and gpsd status exporter
+After=network.target chrony.service gpsd.service
+
+[Service]
+Type=simple
+User=gpsdash
+WorkingDirectory=/opt/gpsdash-agent
+ExecStart=/usr/bin/python3 server.py
+# The offset history is saved here (StateDirectory creates /var/lib/gpsdash-agent for the service user), so a restart keeps
+# the last 15 minutes. Outside the agent folder on purpose.
+StateDirectory=gpsdash-agent
+Environment=AGENT_HISTORY_FILE=/var/lib/gpsdash-agent/history.json
+Restart=on-failure
+
+# Hardening: reads chrony (UDP on localhost) and gpsd (TCP on localhost), writes only its state folder.
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

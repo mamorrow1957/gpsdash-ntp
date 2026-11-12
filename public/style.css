@@ -1,0 +1,397 @@
+:root {
+  --series-1: #3987e5;
+  --text-muted: #898781;
+  --status-ideal: #3987e5; /* blue: better than green */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --series-stale: #f5d33d; /* the clock-offset line restored from before a server restart */
+  --status-serious: #ec835a;
+  --status-critical: #e66767;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: #10141a;
+  color: #e6edf3;
+  min-height: 100vh; /* with the flex column, the footer sits at the bottom even on a short page */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+header h1 {
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #8b98a5;
+  margin-top: 0;
+}
+
+.error-banner {
+  background: #4a1c1c;
+  color: #ffb3b3;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+section {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  color: #8b98a5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1rem;
+}
+
+dt {
+  color: #8b98a5;
+}
+
+dd {
+  margin: 0;
+}
+
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-ideal {
+  background: var(--status-ideal);
+}
+
+.status-good {
+  background: var(--status-good);
+}
+
+.status-warning {
+  background: var(--status-warning);
+}
+
+.status-serious {
+  background: var(--status-serious);
+}
+
+.status-critical {
+  background: var(--status-critical);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #30363d;
+}
+
+th {
+  color: #8b98a5;
+  font-weight: normal;
+}
+
+tr.state-selected {
+  color: var(--status-good);
+}
+
+tr.state-rejected {
+  color: var(--text-muted);
+}
+
+.sky-svg {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.sky-horizon {
+  fill: none;
+  stroke: #30363d;
+  stroke-width: 1;
+}
+
+.sky-ring {
+  fill: none;
+  stroke: #21262d;
+  stroke-width: 1;
+}
+
+.sky-label {
+  fill: var(--text-muted);
+  font-size: 10px;
+}
+
+.sky-dot-used {
+  fill: var(--sat, var(--series-1));
+  stroke: #161b22;
+  stroke-width: 2;
+}
+
+.sky-dot-unused {
+  fill: var(--sat, var(--text-muted));
+  fill-opacity: 0.32;
+  stroke: var(--sat, var(--text-muted));
+  stroke-width: 1.5;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.legend .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+}
+
+.dot-used {
+  background: #b6bec9;
+}
+
+.dot-unused {
+  background: rgba(182, 190, 201, 0.32);
+  border: 1.5px solid #b6bec9;
+  width: 7px;
+  height: 7px;
+}
+
+.sky-dot-nosignal {
+  fill: none;
+  stroke: var(--sat, var(--text-muted));
+  stroke-width: 1.5;
+  stroke-dasharray: 2.5 2;
+}
+
+.legend .dot-nosignal {
+  background: transparent;
+  border: 1.5px dotted #b6bec9;
+  width: 7px;
+  height: 7px;
+}
+
+/* satellites that cannot be placed on the plot get a dashed outline in the legend */
+.legend .dot-noposition,
+.legend .dot-below {
+  background: transparent;
+  border: 1px dashed var(--text-muted);
+  width: 7px;
+  height: 7px;
+}
+
+.legend-constellations {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.sky-hint {
+  opacity: 0.7;
+  font-size: 0.7rem;
+}
+
+.sky-note {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.sparkline-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sparkline-grid {
+  stroke: var(--text-muted);
+  stroke-width: 0.5;
+  opacity: 0.25;
+}
+
+.sparkline-zero {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.7;
+}
+
+.sparkline-tick {
+  fill: var(--text-muted);
+  font-size: 9px;
+}
+
+.sparkline-line {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* stretches with no data from the source: a solid yellow line (a bridge over a gap, or the last value held while silent) */
+.sparkline-line-gap {
+  fill: none;
+  stroke: var(--series-stale);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.sparkline-dot-stale {
+  fill: none;
+  stroke: var(--series-stale);
+  stroke-width: 2;
+}
+
+.sparkline-stale-note {
+  text-align: center;
+  color: var(--series-stale);
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.sparkline-dot {
+  fill: var(--series-1);
+  stroke: #161b22;
+  stroke-width: 2;
+}
+
+.sparkline-caption {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.section-head h2 {
+  margin-bottom: 0.83em;
+}
+
+.graph-toggles {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.toggle {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid #30363d;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.toggle[aria-pressed="true"] {
+  color: #e6edf3;
+  border-color: var(--series-1);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--series-1);
+  outline-offset: 2px;
+}
+
+/* A value you can click to change its unit (altitude: feet / meters). Looks like text, with a dotted underline as the hint. */
+.unit-toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+}
+
+.unit-toggle:hover {
+  color: var(--series-1);
+}
+
+.unit-toggle:focus-visible {
+  outline: 2px solid var(--series-1);
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.site-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.site-footer p {
+  margin: 0.15rem 0;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
+}

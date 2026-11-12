@@ -1,0 +1,19 @@
+{
+  "name": "gpsdash",
+  "version": "1.0.0",
+  "description": "Self-hosted status dashboard for a GPS-disciplined stratum-1 NTP server (chrony + gpsd)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "playwright test"
+  },
+  "keywords": [],
+  "author": "Michael Morrow",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

@@ -1,0 +1,34 @@
+# Example systemd unit for the dashboard. Copy it to /etc/systemd/system/gpsdash.service and adjust:
+#   - User and WorkingDirectory (the folder that holds server.js and node_modules; see "Running as a service" in the README)
+#   - ExecStart: the path of your node binary (check with: command -v node)
+#   - AGENT_URL: where the agent answers (the machine with the GPS receiver)
+[Unit]
+Description=gpsdash: GPS and NTP status dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=gpsdash
+WorkingDirectory=/opt/gpsdash
+ExecStart=/usr/bin/node server.js
+Environment=PORT=3000
+Environment=AGENT_URL=http://localhost:8081/status
+Restart=on-failure
+
+# Hardening. The dashboard only reads its own folder and writes nothing. Node needs memory that is writable and executable
+# for its JIT, so MemoryDenyWriteExecute is deliberately not set. To listen on a port below 1024 (for example 80), add
+#   AmbientCapabilities=CAP_NET_BIND_SERVICE
+# and change CapabilityBoundingSet to CAP_NET_BIND_SERVICE.
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target
