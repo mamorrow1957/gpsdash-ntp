@@ -4,6 +4,10 @@ A small, self-hosted status dashboard for a **GPS-disciplined NTP server**: a ma
 
 **Self-hosted means you run it yourself, on your own hardware.** There is no hosted version, no account and no sign-up, and nothing is sent anywhere: the dashboard talks only to the agent you point it at.
 
+![The gpsdash page: GPS fix, NTP status, sky view, clock offset graph and sources](docs/screenshots/dashboard.png)
+
+*The screenshot uses demo data; the position shown is made up.*
+
 > **Security note: there is no login.** The agent and the dashboard show the receiver's exact position (latitude, longitude and altitude) to anyone who can reach them. Keep them on a private network, or put a reverse proxy with authentication in front of the dashboard. Do not expose the agent (port 8081) to the internet.
 
 ## How it works
@@ -29,6 +33,15 @@ refclock PPS /dev/pps0 refid PPS lock GPS precision 1e-7 prefer
 ```
 
 gpsdash works with any chrony and gpsd setup, with or without the pulse; without PPS the clock is only as good as the serial time.
+
+**Hardware I use**
+
+- Raspberry Pi 4
+- Uputronics GPS/RTC Expansion Board (a Raspberry Pi HAT)
+- Uputronics Active GPS Patch Antenna (SMA connector, magnetic mount)
+- Argon ONE case. It works, but mounting the GPS board in it is awkward. Any case that leaves room for a HAT on the GPIO header should be easier.
+
+This is only what the author happens to have; none of it is required, and nothing here is an endorsement or a sales link.
 
 ## Quick start
 
