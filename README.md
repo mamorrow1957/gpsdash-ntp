@@ -34,6 +34,8 @@ refclock PPS /dev/pps0 refid PPS lock GPS precision 1e-7 prefer
 
 gpsdash works with any chrony and gpsd setup, with or without the pulse; without PPS the clock is only as good as the serial time.
 
+The author uses this Pi as the time source for his Windows servers, which is why a dashboard that shows whether the clock is really locked to GPS is useful to him. (Any NTP client can use it once chrony is set to allow your network with an `allow` line; gpsdash only displays chrony's status and does not serve time itself.)
+
 **Hardware I use**
 
 - Raspberry Pi 4
