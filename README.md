@@ -39,8 +39,8 @@ The author uses this Pi as the time source for his homelab, which features two W
 **Hardware I use**
 
 - Raspberry Pi 4
-- Uputronics GPS/RTC Expansion Board (a Raspberry Pi HAT)
-- Uputronics Active GPS Patch Antenna (SMA connector, magnetic mount)
+- [Uputronics GPS/RTC Expansion Board](https://store.uputronics.com/products/raspberry-pi-gps-rtc-expansion-board) (a Raspberry Pi HAT). I chose it because it comes fully assembled, so there is no soldering of headers.
+- [Uputronics Active GPS Patch Antenna with SMA connector](https://store.uputronics.com/products/active-gps-patch-antenna-with-sma-connector) (magnetic mount)
 - Argon ONE case. It works, but mounting the GPS board in it is awkward. Any case that leaves room for a HAT on the GPIO header should be easier.
 
 This is only what the author happens to have; none of it is required, and nothing here is an endorsement or a sales link.
