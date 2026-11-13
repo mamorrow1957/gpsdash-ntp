@@ -431,10 +431,13 @@ test("when the agent itself stops there is a real gap, and no samples are invent
   const server = await startServer({ AGENT_URL: agent.url, POLL_INTERVAL_MS: "100" });
   try {
     await expect.poll(async () => (await historyOf(server)).count, { timeout: 8000 }).toBeGreaterThanOrEqual(10);
+    const before = (await historyOf(server)).count;
     agent.freeze(true); // down: neither sampling nor answering
     await sleep(1200);
     agent.freeze(false);
-    await expect.poll(async () => (await historyOf(server)).count, { timeout: 8000 }).toBeGreaterThanOrEqual(20);
+    // wait for samples taken AFTER the outage (counting from what the server held before it): waiting for a fixed total could
+    // be satisfied by the samples from before the outage, and the check below would then run before any new sample arrived
+    await expect.poll(async () => (await historyOf(server)).count, { timeout: 8000 }).toBeGreaterThanOrEqual(before + 10);
     const gaps = spacings((await historyOf(server)).samples).filter((d) => d > 900);
     expect(gaps.length).toBe(1);
     expect(gaps[0]).toBeGreaterThan(1000);
